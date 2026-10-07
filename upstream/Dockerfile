@@ -22,7 +22,10 @@ COPY frontend/ ./
 RUN npm run build
 
 # ---- pack the static site into the binary's embedded format ------------------
-FROM --platform=$BUILDPLATFORM rust:1-alpine AS packer
+# rust 1.79: web-static-pack-packer 0.1.6's `time` dependency does not compile
+# on newer rustc (E0282, fixed in time 0.3.36, but the packer crate pins older)
+FROM --platform=$BUILDPLATFORM rust:1.79-alpine AS packer
+RUN apk add --no-cache musl-dev
 RUN cargo install web-static-pack-packer --version 0.1.6 --locked
 COPY --from=frontend /build/frontend/dist /dist
 RUN web-static-pack-packer /dist /ui.pack
