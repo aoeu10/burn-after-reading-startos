@@ -2,11 +2,11 @@
 
 A StartOS 0.4 package for [Burn After Reading](https://github.com/Start9Labs/burn-after-reading) — a simple, fast, standalone pastebin service that shares encrypted messages and files via ephemeral Tor (.onion) links that are destroyed after they are viewed.
 
-The upstream repository is archived (read-only) and its wrapper targeted the old 0.3.x SDK. This repo repackages the same server for StartOS 0.4 using the current `@start9labs/start-sdk`.
+**Verified working on StartOS 0.4.0.2.** The upstream repository is archived (read-only) and its wrapper targeted the old 0.3.x SDK. This fork repackages the same server for StartOS 0.4 using the current `@start9labs/start-sdk` (3.0.3).
 
 ## Architecture
 
-- `upstream/` — vendored upstream sources (Angular/Ionic frontend, Rust/warp backend), pinned to upstream master (see `UPDATING.md`).
+- `upstream/` — vendored upstream sources (Angular/Ionic frontend, Rust/warp backend), pinned to upstream 0.1.6 / master (see `UPDATING.md`).
 - `upstream/Dockerfile` — multi-stage build: frontend → `web-static-pack-packer` (embeds the static site as `backend/src/ui.pack`) → x86_64 musl static binary (cross-compiled natively via `messense/rust-musl-cross`) → alpine + tini runtime. Runs natively on ARM build hosts; no QEMU.
 - `startos/` — SDK 3.0.x package code:
   - **Volume**: single `main` volume mounted at `/root` in the container. The upstream binary uses its working directory for everything: `start9/config.yaml` (config), `start9/stats.yaml`, `burn-after-reading.db` (sled), `big/`, `tmp/`.
@@ -17,7 +17,7 @@ The upstream repository is archived (read-only) and its wrapper targeted the old
 
 ## Differences from upstream
 
-- Targets the StartOS 0.4 SDK (upstream wrapper was 0.3.x `manifest.yaml`).
+- Targets the StartOS 0.4 SDK (upstream wrapper was 0.3.x `manifest.yaml` + `start-sdk pack`).
 - Properties (0.3 `stats.yaml` display) are replaced by SDK actions; the binary still writes `start9/stats.yaml` — StartOS 0.4 ignores it.
 - x86_64 only (`arch: ['x86_64']`, `ARCHES := x86`). Add `aarch64` to the manifest and Makefile to build universal.
 - The upstream Tor port-mapping/lan-config sections are gone: in 0.4 the user decides where interfaces are reachable (Tor is installed per-interface by the user).
@@ -28,11 +28,13 @@ The upstream repository is archived (read-only) and its wrapper targeted the old
 make          # x86_64 s9pk (ARCHES := x86)
 ```
 
+Requires a StartOS packaging workspace (`start-cli s9pk init-workspace`), Docker with buildx, and `tar2sqfs` (squashfs-tools-ng) on PATH.
+
 Install: point `.startos/config.yaml` at your server (`host.default`), `start-cli auth login`, then `make install` — or sideload the `.s9pk` via StartOS → System → Sideload a Service.
 
 ## Verify
 
-- Service starts; health check `Web Interface` goes green.
+- Service starts; health check `Web Interface` goes green. *(verified on StartOS 0.4.0.2)*
 - Get Password returns the install-generated password; logging into the UI with it works.
 - Set Password → service restarts → old password rejected, new one accepted.
 - Backup/restore round-trip keeps pastes and password.
