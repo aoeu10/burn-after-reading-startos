@@ -1,5 +1,11 @@
 # Burn After Reading (BAR)
 
+## License & Attribution
+
+GNU GPL version 3; provided without warranty. Original application: Start9Labs and its contributors, including backend author Aiden McClelland. Fork maintainer: Scott (aoeu10). Modified 2026-10-08 for StartOS 0.4: packaging, build, configuration actions, and documentation. Original authors retain their rights; this fork is not an official Start9 release.
+
+License, attribution notice, source, and build instructions: https://github.com/aoeu10/burn-after-reading-startos (LICENSE and NOTICE.md).
+
 BAR lets you share encrypted messages and files with ephemeral links that are destroyed after they are viewed.
 
 ## Logging In

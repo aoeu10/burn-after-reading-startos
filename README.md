@@ -4,6 +4,10 @@ A StartOS 0.4 package for [Burn After Reading](https://github.com/Start9Labs/bur
 
 **Verified working on StartOS 0.4.0.2.** The upstream repository is archived (read-only) and its wrapper targeted the old 0.3.x SDK. This fork repackages the same server for StartOS 0.4 using the current `@start9labs/start-sdk` (3.0.3).
 
+## License & Attribution
+
+Distributed under **GNU GPL version 3**; the upstream [LICENSE](LICENSE) is preserved. Original application credit belongs to **Start9Labs and its contributors**, including **Aiden McClelland**, the backend author named upstream. **Scott (aoeu10)** maintains this fork and its StartOS 0.4 adaptations. See [NOTICE.md](NOTICE.md) for the dated modification notice, attribution, and source information.
+
 ## Architecture
 
 - `upstream/` — vendored upstream sources (Angular/Ionic frontend, Rust/warp backend), pinned to upstream 0.1.6 / master (see `UPDATING.md`).

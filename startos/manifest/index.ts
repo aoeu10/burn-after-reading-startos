@@ -5,7 +5,7 @@ export const manifest = setupManifest({
   id: 'burn-after-reading',
   title: 'Burn After Reading',
   license: 'GPL-3.0',
-  packageRepo: 'https://github.com/Start9Labs/burn-after-reading',
+  packageRepo: 'https://github.com/aoeu10/burn-after-reading-startos',
   upstreamRepo: 'https://github.com/Start9Labs/burn-after-reading',
   marketingUrl: 'https://burnafterreading.net',
   donationUrl: null,
