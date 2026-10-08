@@ -22,6 +22,23 @@ A StartOS 0.4 package for [Burn After Reading](https://github.com/Start9Labs/bur
 - x86_64 only (`arch: ['x86_64']`, `ARCHES := x86`). Add `aarch64` to the manifest and Makefile to build universal.
 - The upstream Tor port-mapping/lan-config sections are gone: in 0.4 the user decides where interfaces are reachable (Tor is installed per-interface by the user).
 
+## Download
+
+Prebuilt x86_64 packages are attached to [GitHub Releases](https://github.com/aoeu10/burn-after-reading-startos/releases). Each release carries the `.s9pk` and its SHA-256 checksum.
+
+## Sideload a downloaded .s9pk
+
+1. Download `burn-after-reading_x86_64.s9pk` (and the `.sha256` if you want to verify: `sha256sum -c burn-after-reading_x86_64.s9pk.sha256`).
+2. In your StartOS web UI, go to **System → Sideload a Service**.
+3. Drag in (or browse to) the downloaded `.s9pk` and confirm. StartOS validates, unpacks, and installs it.
+4. Open **Services → Burn After Reading**, start it, and use the **Get Password** action to reveal your login password.
+
+From a terminal with `start-cli` configured against your server, the same thing is:
+
+```sh
+start-cli package install -s burn-after-reading_x86_64.s9pk
+```
+
 ## Build
 
 ```sh
